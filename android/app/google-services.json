@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "972300754691",
+    "project_id": "fluttertest-71fff",
+    "storage_bucket": "fluttertest-71fff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972300754691:android:6750d51a86b60f25c19336",
+        "android_client_info": {
+          "package_name": "com.example.messenger_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972300754691-dotba909lq0v472dp67cfuv60qekc0sk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPah7LjXvm3Cgc5LJpOWClY_X9cXtJSWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972300754691-dotba909lq0v472dp67cfuv60qekc0sk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "972300754691-d3ao1vjaulgulm3c6qag937o36kdvovv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "mychatapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
