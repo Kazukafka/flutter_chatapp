@@ -11,6 +11,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isSearching = false;
+  TextEditingController searchUserNameEdittingController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,28 +37,54 @@ class _HomeState extends State<Home> {
         margin: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Colors.black87,
-                      width: 1,
-                      style: BorderStyle.solid),
-                  borderRadius: BorderRadius.circular(24)),
-              child: Column(children: [
-                Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none, hintText: "username"),
-                    )),
-                    Icon(Icons.search)
-                  ],
-                ),
-              ]),
-            ),
+            Row(
+              children: [
+                isSearching
+                    ? GestureDetector(
+                        onTap: () {
+                          isSearching = false;
+                          searchUserNameEdittingController.text = "";
+                          setState(() {});
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(right: 12),
+                            child: Icon(Icons.arrow_back)),
+                      )
+                    : Container(),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
+                            style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(24)),
+                    child: Column(children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: TextField(
+                            controller: searchUserNameEdittingController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none, hintText: "username"),
+                          )),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isSearching = true;
+                                  setState(() {});
+                                });
+                              },
+                              child: Icon(Icons.search))
+                        ],
+                      ),
+                    ]),
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),
