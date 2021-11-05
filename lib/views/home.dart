@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:messenger_clone/services/auth.dart';
+import 'package:messenger_clone/services/database.dart';
 import 'package:messenger_clone/views/signin.dart';
 import 'package:flutter/src/material/icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final databaseReference = FirebaseFirestore.instance;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,8 +17,38 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isSearching = false;
+  late Stream usersStream;
+
   TextEditingController searchUserNameEdittingController =
       TextEditingController();
+
+  onSearchBtnClick() async {
+    isSearching = true;
+    setState(() {});
+    usersStream = await DatabaseMethods()
+        .getUserByUserName(searchUserNameEdittingController.text);
+  }
+
+  Widget searchUsersList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: usersStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data!.docs[index];
+                  return Image.network(ds["imgUrl"]);
+                },
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,10 +107,10 @@ class _HomeState extends State<Home> {
                           )),
                           GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  isSearching = true;
-                                  setState(() {});
-                                });
+                                if (searchUserNameEdittingController.text !=
+                                    "") {
+                                  onSearchBtnClick();
+                                }
                               },
                               child: Icon(Icons.search))
                         ],
@@ -84,7 +119,8 @@ class _HomeState extends State<Home> {
                   ),
                 )
               ],
-            )
+            ),
+            searchUsersList()
           ],
         ),
       ),
